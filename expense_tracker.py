@@ -8,8 +8,10 @@ def main():
     expense_file_path= "expense.csv"
     budget = 100000
     #Get user input for expense.
+    expense = get_user_expense()
     
     #Write their expense to a file.
+    save_expense_to_file(expense, expense_file_path)
    
     #Read file and summarize expenses.
     summarize_expense(expense_file_path, budget)
@@ -87,19 +89,21 @@ def summarize_expense(expense_file_path ,budget):
     print("Expense By Category: ")
 
     for key, amount in amount_by_category.items():
-        print(f"   {key}: ${amount:.2f}")
+        print(f"   {key}: {amount:.2f}")
 
 
     total_spent =  sum([ x.amount for x in expenses])
-    print(f"You've spent ${total_spent:.2f} this month!")
+    print(f"You've spent {total_spent:.2f} this month!")
 
     remaining_budget = budget - total_spent
-    print(f"Budget Remaining: ${remaining_budget:.2f}")
+    print(f"Budget Remaining: {remaining_budget:.2f}")
 
     now = datetime.datetime.now()
     days_in_month= calendar.monthrange(now.year , now.month)[1]
     remaining_days = days_in_month - now.day
-    print("Remaing days in the current month:" , remaining_days)
+
+    daily_budget = remaining_budget/remaining_days
+    print(f"Budget per day: {daily_budget:.2f}")
 
 
 
