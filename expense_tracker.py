@@ -4,13 +4,13 @@ from expense import Expense
 def main():
     print("Running Expense Tracker")
     expense_file_path= "expense.csv"
+    budget = 100000
     #Get user input for expense.
-    
     
     #Write their expense to a file.
    
     #Read file and summarize expenses.
-    summarize_expense(expense_file_path)
+    summarize_expense(expense_file_path, budget)
 
 
 
@@ -55,7 +55,7 @@ def save_expense_to_file(expense:Expense,expense_file_path):
 
 
 
-def summarize_expense(expense_file_path):
+def summarize_expense(expense_file_path ,budget):
     print("Summarizing User Expense")
     expenses: list[Expense]=[]
     with open (expense_file_path, "r") as f:
@@ -82,9 +82,17 @@ def summarize_expense(expense_file_path):
         else:
             amount_by_category[key]=expense.amount
 
+    print("Expense By Category: ")
 
     for key, amount in amount_by_category.items():
         print(f"   {key}: ${amount:.2f}")
+
+
+    total_spent =  sum([ x.amount for x in expenses])
+    print(f"You've spent ${total_spent:.2f} this month!")
+
+    remaining_budget = budget - total_spent
+    print(f"Budget Remaining: ${remaining_budget:.2f}")
 
 
 
