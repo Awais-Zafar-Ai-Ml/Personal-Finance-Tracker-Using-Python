@@ -1,4 +1,6 @@
 from expense import Expense
+import calendar
+import datetime
 
 
 def main():
@@ -93,6 +95,11 @@ def summarize_expense(expense_file_path ,budget):
 
     remaining_budget = budget - total_spent
     print(f"Budget Remaining: ${remaining_budget:.2f}")
+
+    now = datetime.datetime.now()
+    days_in_month= calendar.monthrange(now.year , now.month)[1]
+    remaining_days = days_in_month - now.day
+    print("Remaing days in the current month:" , remaining_days)
 
 
 
