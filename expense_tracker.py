@@ -5,14 +5,13 @@ def main():
     print("Running Expense Tracker")
     expense_file_path= "expense.csv"
     #Get user input for expense.
-    expense = get_user_expense()
+    
     
     #Write their expense to a file.
-    save_expense_to_file(expense,expense_file_path)
+   
     #Read file and summarize expenses.
-def summarize_expense(expense_file_path):
-    pass
-    
+    summarize_expense(expense_file_path)
+
 
 
 def get_user_expense():
@@ -49,13 +48,43 @@ def save_expense_to_file(expense:Expense,expense_file_path):
     print(f"saving user expense: {expense} to {expense_file_path}")
     with open(expense_file_path,"a") as f:
         f.write(f"{expense.name},{expense.amount},{expense.category}\n")
+
+
     
+        
 
 
 
-def summarize_expense():
-    print("Summarizing user expense")
+def summarize_expense(expense_file_path):
+    print("Summarizing User Expense")
+    expenses: list[Expense]=[]
+    with open (expense_file_path, "r") as f:
+        lines = f.readlines()
+        for line in lines:
+            expense_name, expense_amount , expense_catergory =line.strip().split(",")
+           
+            line_expense=Expense(
+
+                name = expense_name, 
+                amount=float(expense_amount), 
+                category=expense_catergory
+
+            )
+            
+            expenses.append(line_expense)
     
+    amount_by_category={}
+    for expense in expenses:
+        key=expense.category
+        if key in amount_by_category:
+            amount_by_category[key] += expense.amount
+
+        else:
+            amount_by_category[key]=expense.amount
+
+
+    for key, amount in amount_by_category.items():
+        print(f"   {key}: ${amount:.2f}")
 
 
 
